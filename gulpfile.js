@@ -28,6 +28,7 @@ var config = {
     htmlout: 'dist/',
     scssout: 'src/css/',
     cssoutname: 'style.css',
+    csspoutname:'plugin.css',
     jsoutname: 'script.js',
     jspoutname: 'plugins.js',
     cssreplaceout: 'css/style.css',
@@ -37,14 +38,19 @@ var config = {
         'node_modules/jquery/dist/jquery.js',
         'node_modules/knockout/build/output/knockout-latest.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js'
-    ]
+    ], 
+    cssPlugin:[
+        'node_modules/bootstrap/dist/css/bootstrap.min.css'
+    ],
+    jsonsrc:'src/*.json',
+    jsondist:'dist'
 };
 
 gulp.task('reload', function() {
     browserSync.reload();
 });
 
-gulp.task('serve', ['sass', 'jsPlugins', 'js'], function() {
+gulp.task('serve', ['sass','cssPlugin', 'jsPlugins', 'js'], function() {
     browserSync({
         server: config.src
     });
@@ -64,14 +70,19 @@ gulp.task('sass', function() {
         .pipe(gulp.dest(config.scssout))
         .pipe(browserSync.stream());
 });
-
+gulp.task('cssPlugin', function() {
+    return gulp.src(config.cssPlugin)
+        .pipe(concat(config.csspoutname))
+        .pipe(cleanCSS({level: {1: {specialComments: 0}}}))
+        .pipe(gulp.dest(config.scssout))
+        .pipe(gulp.dest(config.cssout));
+});
 gulp.task('css', function() {
     return gulp.src(config.cssin)
         .pipe(concat(config.cssoutname))
         .pipe(cleanCSS())
         .pipe(gulp.dest(config.cssout));
 });
-
 gulp.task('js', function() {
     return gulp.src(config.jsin)
         .pipe(concat(config.jsoutname))
@@ -96,7 +107,7 @@ gulp.task('img', function() {
 gulp.task('html', function() {
     return gulp.src(config.htmlin)
         .pipe(htmlReaplce({
-            'css': config.cssreplaceout,
+            // 'css': config.cssreplaceout,
             'js': [config.jspreplaceout, config.jsreplaceout]
         }))
         .pipe(htmlMin({
@@ -106,13 +117,17 @@ gulp.task('html', function() {
         }))
         .pipe(gulp.dest(config.dist))
 });
+gulp.task('json', function() {
+    return gulp.src(config.jsonsrc)
+        .pipe(gulp.dest(config.jsondist));
+});
 
 gulp.task('clean', function() {
     return del([config.dist]);
 });
 
 gulp.task('build', function() {
-    sequence('clean', ['html', 'jsPlugins', 'js', 'css', 'img']);
+    sequence('clean', ['html', 'jsPlugins', 'js','cssPlugin', 'css', 'img','json']);
 });
 
 gulp.task('default', ['serve']);

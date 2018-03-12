@@ -3,33 +3,40 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gulp Starter Kit</title>
-    <!-- build:css -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neighborhood Map Project</title>
+    <link rel="stylesheet" href="css/plugin.css">
     <link rel="stylesheet" href="css/style.css">
+    <!-- build:css -->
+    
+    
     <!-- endbuild -->
 </head>
 
 <body>
-    <div class="container">
-        <div class="options-box">
-            <p>Filter:
-                <input data-bind="value: filter, valueUpdate: 'keyup'" />
-            </p>
-            <div data-bind="foreach: filteredItems">
-                <p data-bind="text: title, click:openInfoWindow"></p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="options-box col-5 col-md-3" >
+                <p>Filter
+                    <input class="form-control" data-bind="value: filter, valueUpdate: 'keyup'" />
+                </p>
+                <div class='filterList' data-bind="foreach: filteredItems">
+                    <p data-bind="text: title, click:openInfoWindow"></p>
+                </div>
             </div>
-        </div>
 
-        <div id="map"></div>
+            <div id="map" class="col-7 col-md-9"></div>
+        </div>
     </div>
-    <script src="js/lib/plugins.js"></script>
+    
 
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2uMEURI4A9GbRzVGQ0FtXwJGPK1LOM9w&v=3&callback=initMap">
     </script>
     <!-- build:js -->
+    <script src="js/lib/plugins.js"></script>
     <script src="js/app/map.js"></script>
-    <script src="js/app/script.js"></script>
+    <script src="js/app/filter.js"></script>
 
 
     <!-- endbuild  -->

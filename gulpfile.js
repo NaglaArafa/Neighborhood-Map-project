@@ -115,7 +115,7 @@ gulp.task('html', function() {
             sortClassName: true,
             collapseWhitespace: true
         }))
-        .pipe(gulp.dest(config.dist))
+        .pipe(gulp.dest(config.dist));
 });
 gulp.task('json', function() {
     return gulp.src(config.jsonsrc)

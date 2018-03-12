@@ -1,50 +1,35 @@
-var data = [{
-    Id: 1,
-    LastName: "Franklin"
-}, {
-    Id: 2,
-    LastName: "Green"
-}, {
-    Id: 3,
-    LastName: "Balmer"
-}];
+var Filtering = function(locations) {
 
-var columns = [{
-    value: 'Id'
-}, {
-    value: 'LastName'
-}];
-
-var Filtering = function (data, columns) {
     var self = this;
 
-    self.items = ko.observableArray(data);
-    self.columns = ko.observableArray(columns);
+    self.items = ko.observableArray(locations);
     self.filter = ko.observable();
 
-    self.filteredItems = ko.computed(function () {
+    self.filteredItems = ko.computed(function() {
+        // console.log('markers' + markers)
         var filter = self.filter();
-        console.log(filter);
         if (!filter) {
+            markers.forEach(function(marker) {
+                marker.setMap(map)
+                    // .setVisible(true);
+            });
             return self.items();
         } else {
-            return ko.utils.arrayFilter(self.items(), function (item) {
-                console.log('Filtering on Item');
-                var matching = -1;
-                ko.utils.arrayForEach(self.columns(), function (c) {
-                    var val = item[c.value];
-                    if (typeof val === 'number') {
-                        val = val.toString();
-                    }
-                    console.log('Filtering on Column');
-                    matching+= val.toLowerCase().indexOf(filter.toLowerCase())+1;
-                });
-                 console.log(matching);
-                return matching>=0;
+            return ko.utils.arrayFilter(self.items(), function(item) {
+                var val = item.title;
+                var matching = val.toLowerCase().indexOf(filter.toLowerCase()) + 1;
+                // console.log("match" + matching)
+                if (matching >= 1) {
+                    // console.log('marker ' + markers[item.id].id);
+                    markers[item.id].setMap(map)
+                        // .setVisible(true)
+                } else {
+                    markers[item.id].setMap(null)
+                        // .setVisible(false)
+                }
+                return matching;
             });
         }
 
     });
 };
-
-ko.applyBindings(new Filtering(data, columns));

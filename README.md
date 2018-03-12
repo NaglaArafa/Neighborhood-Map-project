@@ -22,8 +22,11 @@ I used [FourSquare Api](https://developer.foursquare.com/) as a 3rd=part APi to 
 ## Setup
 
  1- You can clone or download the repo,
- 2- Run 'npm install' to install all node modules
- 3- Run  'gulp' commant, this will open new window in the browser,so you can check the app
+
+ 2- Run 'npm install' to install all node modules,
+
+ 3- Run  'gulp' commant, this will open new window in the browser,so you can check the app,
+ 
  4- If you need to produce production version run 'gulp build', this will produce the dist folder which contains all minified version of my files
 
 

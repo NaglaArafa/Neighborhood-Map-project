@@ -29,9 +29,9 @@ I used [FourSquare Api](https://developer.foursquare.com/) as a 3rd=part APi to 
 
  4- If you need to produce production version run 'gulp build', this will produce the dist folder which contains all minified version of my files
 
-<!-- 
+
 ## Need to try?
 
- * Click [here](https://naglaarafa.github.io/Neighborhood-Map-project/) to try it.
+ * Click [here](https://naglaarafa.github.io/Neighborhood-Map-project/src) to try it.
  * Try to write in the filter textbox and check the filtered list and the markers on the map.
- * Or click on any item of the list, or any marker on the map to see the details of this place. -->
+ * Or click on any item of the list, or any marker on the map to see the details of this place.
